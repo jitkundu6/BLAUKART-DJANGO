@@ -48,7 +48,7 @@ INSTALLED_APPS = [
 	
 	'django.contrib.admin',
 	
-	'modules.shop',
+	'modules.shop.apps.ShopConfig',
 ]
 
 #AUTH_USER_MODEL = 'accounts.User' # to change the built-in user model

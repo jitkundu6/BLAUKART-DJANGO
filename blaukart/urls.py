@@ -22,12 +22,14 @@ from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns = [
 	path('admin/', admin.site.urls),
-	# path('', TemplateView.as_view(template_name="home.html"), name="home"),
+	#path('', TemplateView.as_view(template_name="shop/index.html"), name="home"),
+	path('', include('modules.shop.urls')),
 ]
 
 # Multi-Lingual URL
 urlpatterns += i18n_patterns(
-	# path('', TemplateView.as_view(template_name="home.html"), name="home")
+	#path('', TemplateView.as_view(template_name="shop/index.html"), name="home"),
+	path('', include('modules.shop.urls')),
 )
 
 # Error Handlers:
