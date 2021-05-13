@@ -1,0 +1,12 @@
+db.sqlite3
+*.db
+*.log
+*.pyc
+*~
+__pycache__
+.DS_Store
+media/
+*.sublime-project
+*.sublime-workspace
+node_modules/
+myvenv/
