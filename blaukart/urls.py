@@ -14,8 +14,25 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
+from django.views.generic import TemplateView
+from django.conf.urls import (handler400, handler403, handler404, handler500)
+from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+	path('admin/', admin.site.urls),
+	# path('', TemplateView.as_view(template_name="home.html"), name="home"),
 ]
+
+# Multi-Lingual URL
+urlpatterns += i18n_patterns(
+	# path('', TemplateView.as_view(template_name="home.html"), name="home")
+)
+
+# Error Handlers:
+handler404 = 'modules.appcore.accounts.views.error404'
+# handler400 = 'modules.appcore.accounts.error_views.bad_request'
+# handler403 = 'modules.appcore.accounts.error_views.permission_denied'
+# handler404 = 'django.views.defaults.page_not_found'
+handler500 = 'modules.appcore.accounts.views.error500'
