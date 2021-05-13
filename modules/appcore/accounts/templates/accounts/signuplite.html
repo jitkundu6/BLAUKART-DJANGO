@@ -1,0 +1,57 @@
+{% extends 'accounts/base.html' %}
+
+{% block head %}
+    <title>Create Account</title> 
+{% endblock %}
+
+{% block body %}
+<!--h1> Sign Up Lite! </h1-->
+
+    <div class="container">
+        <div class="card mt-5">
+            <h4 class="card-header">Quick Sign Up!</h4>
+            <div class="card-body">
+
+           <div class="col-lg-10 d-flex align-items-center justify-content-center">
+            <div class="auth-form-transparent text-left p-3">
+
+              {% load static %}
+              <div class="brand-logo">
+                <img src="{% static 'accounts/images/webkrone_logo1.png' %}" alt="logo">
+              </div>
+
+              <h4>New here?</h4>
+              <h6 class="font-weight-light">Join us today! It takes only few steps</h6>
+
+
+                <form method="post" action="{% url 'signuplite' %}">
+                    {% csrf_token %}
+                    <table class="table table-bordered">
+                       {{ form.as_p }}
+                       <div class="form-check">
+                                <label class="form-check-label text-muted">
+                                  <input type="checkbox" class="form-check-input" name="agree" id="agree">
+                                  I agree to all Terms & Conditions <br>
+                                </label>
+                        </div>
+
+                        <tr>
+                            <td colspan="2">
+                                <button class="btn btn-primary">Register</button>
+                            </td>
+                        </tr>
+
+                    </table>
+                    <h5> Aready Member? </h5><a href="{% url 'login' %}">Login</a> <br>
+                    <b> Full Register </b><a href="{% url 'signup' %}">Click Here</a>
+                </form>
+
+
+              </div>
+             </div>   
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %} 

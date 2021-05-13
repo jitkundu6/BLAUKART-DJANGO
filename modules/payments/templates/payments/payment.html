@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+    <title>Payment</title>
+</head>
+<body>
+
+    {% if response %}
+
+    <div class="container">
+        <div class="card mt-5">
+            <h4 class="card-header">Quick Pay!</h4>
+            <div class="card-body">
+
+           <div class="col-lg-10 d-flex align-items-center justify-content-center">
+            <div class="auth-form-transparent text-left p-3">
+
+              {% load static %}
+              <div class="brand-logo">
+                <img src="{% static 'accounts/images/webkrone_logo1.png' %}" alt="logo">
+              </div>
+
+              <h4>Make your Payment... </h4>
+              <h6 class="font-weight-light">PAY Rs.  {{pay_amount}} <br></h6>
+
+                <!--form action="/payments/success/" method="POST"-->
+                <form action="{% url 'payment-success' %}" method="POST">
+                    {% csrf_token %}
+                    <!--table class="table table-bordered"-->
+                                   {{ form.as_p }}
+                                   <div class="form-check">
+                                            <label class="form-check-label text-muted">
+                                              <input type="checkbox" class="form-check-input" name="agree" id="agree">
+                                              I agree to all Terms & Conditions <br>
+                                            </label>
+                                    </div>
+                                    <script
+                                            src="https://checkout.razorpay.com/v1/checkout.js"
+                                            data-key= {{api_key}}
+                                            data-amount={{response.amount}}
+                                            data-currency={{response.currency}}
+                                            data-order_id={{response.id}}
+                                            data-buttontext="Pay with Razorpay"
+                                            data-name="Razorpay Quick Payment"
+                                            data-description="Make your Payment in just 2 step"
+                                            data-image="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwebkrone.com%2F&psig=AOvVaw0cPtTQrn68wEnd_8Fa3z5z&ust=1619032741246000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCNiHhpXFjfACFQAAAAAdAAAAABAE"
+                                            data-prefill.name={{request.user.first_name}}
+                                            data-prefill.email={{request.user.email}}
+                                            data-theme.color="#5472F3"
+                                        ></script>
+                                    <input type="hidden" custom="Hidden Element" name="hidden">
+
+                    <!--/table-->       
+                 </form>
+
+              </div>
+             </div>   
+
+            </div>
+        </div>
+    </div>
+
+
+    
+    {% endif %}
+
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

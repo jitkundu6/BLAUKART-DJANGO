@@ -1,0 +1,35 @@
+{% extends 'accounts/base.html' %}
+
+{% block head %}
+    <title>Payment Done!</title> 
+{% endblock %}
+
+{% block body %}
+        <div class="container">
+        <div class="card mt-5">
+            <h4 class="card-header">Payment Done!</h4>
+            <div class="card-body">
+
+           <div class="col-lg-10 d-flex align-items-center justify-content-center">
+            <div class="auth-form-transparent text-left p-3">
+
+              {% load static %}
+              <div class="brand-logo">
+                <img src="{% static 'accounts/images/webkrone_logo1.png' %}" alt="logo">
+              </div>
+              <h6 class="font-weight-light">Your payment is successfully made</h6>
+
+                        <a href="{{last_url}}"> Back </a>   || 
+                        <a href="{% url 'home' %}"> Home </a>
+
+                    </table>
+                </form>
+
+
+              </div>
+             </div>   
+
+            </div>
+        </div>
+    </div>
+{% endblock %} 
