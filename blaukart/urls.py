@@ -13,15 +13,19 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
+
+#from django.contrib import admin
 from django.urls import path, include
 
 from django.views.generic import TemplateView
 from django.conf.urls import (handler400, handler403, handler404, handler500)
 from django.conf.urls.i18n import i18n_patterns
 
+import debug_toolbar
+
 urlpatterns = [
-	path('admin/', admin.site.urls),
+	#path('managers/', admin.site.urls, name='managers'),
+	path('__debug__/', include(debug_toolbar.urls)),
 	#path('', TemplateView.as_view(template_name="shop/index.html"), name="home"),
 	path('', include('modules.shop.urls')),
 ]

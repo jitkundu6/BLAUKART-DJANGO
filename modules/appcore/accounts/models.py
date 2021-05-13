@@ -19,7 +19,7 @@ HOST_EMAIL = 'subhajit.webkrone@gmail.com'
 class CustomUser(AbstractBaseUser, PermissionsMixin):
 	"""
 	Custom User class implementing a fully featured User model with
-	admin-compliant permissions.
+	managers-compliant permissions.
 
 	Email and password are required. Other fields are optional.
 	"""
@@ -51,7 +51,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 	is_staff = models.BooleanField(
 		_('staff status'),
 		default=False,
-		help_text=_('Designates whether the user can log into this admin site.'),
+		help_text=_('Designates whether the user can log into this managers site.'),
 	)
 	
 	is_active = models.BooleanField(
