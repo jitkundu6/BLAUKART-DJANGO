@@ -4,11 +4,12 @@ from modules.shop.urls import basic
 from modules.shop.urls import cart
 from modules.shop.urls import order
 
-from django.urls import path, include
+from django.urls import path, include, re_path
 
+app_name ='shop'
 
 urlpatterns = [
-    path('', include(basic,  namespace='shop')),
-    path('cart/', include(cart, namespace='cart')),
-    path('order/', include(order,  namespace='orders')),
+    re_path('', include(basic,  namespace='basic')),
+    re_path(r'^cart/', include(cart, namespace='cart')),
+    re_path(r'^order/', include(order,  namespace='orders')),
 ]

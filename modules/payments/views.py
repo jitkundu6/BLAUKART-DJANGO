@@ -56,7 +56,7 @@ def payment_initiate(request, id):
 
         if url is not None:
             return redirect(url)
-        return redirect('home')
+        return redirect('shop:basic:home')
 
     else:
         print(f"Get user :{user}")
@@ -89,7 +89,7 @@ def payment_initiate(request, id):
 
         if url is not None:
             return redirect(url)
-        return redirect('home')
+        return redirect('shop:basic:home')
 
     else:
         print(f"Get Payment details by id: {id}")
@@ -120,7 +120,7 @@ def payment_initiate(request, id):
 
         if url is not None:
             return redirect(url)
-        return redirect('home')
+        return redirect('shop:basic:home')
 
     else:
         print(f"Get user :{user}")
@@ -153,7 +153,7 @@ def payment_initiate(request, id):
         
         if url is not None:
             return redirect(url)
-        return redirect('home')
+        return redirect('shop:basic:home')
 
     else:
         print(f"Get Payment status: {status}")
@@ -236,7 +236,7 @@ def payment_success(request):
 
         if url is not None:
             return redirect(url)
-        return redirect('home')
+        return redirect('shop:basic:home')
 
     else:
         print(f"Get user :{user}")
@@ -270,7 +270,7 @@ def payment_success(request):
         
         if url is not None:
             return redirect(url)
-        return redirect('home')
+        return redirect('shop:basic:home')
 
     else:
         print(f"Get Payment details by id: {id}")
@@ -301,7 +301,7 @@ def payment_success(request):
 
         if url is not None:
             return redirect(url)
-        return redirect('home')
+        return redirect('shop:basic:home')
 
     else:
         print(f"Get user :{user}")
@@ -328,7 +328,7 @@ def payment_success(request):
     url = request.META.get('HTTP_REFERER')
     print(f"last_url - {url}")
     if url is None:
-        return redirect('home')
+        return redirect('shop:basic:home')
     else:
         return redirect(url)
 

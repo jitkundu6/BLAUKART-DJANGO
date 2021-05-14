@@ -3,6 +3,7 @@ from . import views
 
 
 
+app_name = 'faqs'
 
 urlpatterns=[
     path('faq/',views.home,name='faq'),

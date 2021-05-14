@@ -33,4 +33,4 @@ def form_submit(request):
 			messages.error(request, f"Error - Please check the details & Try again!")
 			FAILED = True
 	
-	return render(request, 'contact.html', {})
+	return render(request, 'shop/contact.html', {})

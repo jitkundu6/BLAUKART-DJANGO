@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-#from django.contrib import admin
+from django.contrib import admin
 from django.urls import path, include
 
 from django.views.generic import TemplateView
@@ -27,13 +27,17 @@ urlpatterns = [
 	#path('managers/', admin.site.urls, name='managers'),
 	path('__debug__/', include(debug_toolbar.urls)),
 	#path('', TemplateView.as_view(template_name="shop/index.html"), name="home"),
-	path('', include('modules.shop.urls')),
+	path('', include('modules.shop.urls', namespace='shop')),
+	path('contacts/', include('modules.support.contacts.urls', namespace='contacts')),
+	path('faqs/', include('modules.support.faq.urls', namespace='faqs')),
+	path('accounts/', include('modules.appcore.accounts.urls', namespace='accounts')),
+	path('payments/', include('modules.payments.urls', namespace='payments')),
 ]
 
 # Multi-Lingual URL
 urlpatterns += i18n_patterns(
 	#path('', TemplateView.as_view(template_name="shop/index.html"), name="home"),
-	path('', include('modules.shop.urls')),
+	path('', include('modules.shop.urls', namespace='faqs' )),
 )
 
 # Error Handlers:

@@ -4,7 +4,9 @@ from . import views
 
 #from apps.payments.views import payment,payment_success
 
+app_name = 'payments'
+
 urlpatterns = [
-    path('payments/<int:id>/', views.payment_initiate, name="payments"),
-    path('payments/success/', views.payment_success, name="payment-success"),
+    path('<int:id>/', views.payment_initiate, name="payments"),
+    path('success/', views.payment_success, name="payment-success"),
 ]

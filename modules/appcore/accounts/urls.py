@@ -4,6 +4,8 @@ from django.urls import path, include
 from . import views
 from django.contrib.auth import views as auth_views
 
+app_name = 'accounts'
+
 urlpatterns = [
     ##### user related path ##########################
     path('signup/', views.signup, name="signup"),
@@ -28,7 +30,7 @@ urlpatterns = [
     path('password_reset_otp/', views.password_reset_by_otp, name='password_reset_otp'),
     path('password_reset/', views.password_reset, name ='password_reset'),
 
-#    path('user_dashboard/', views.user_dashboard, name ='user_dashboard'),
+    path('user_dashboard/', views.user_dashboard, name ='user_dashboard'),
     path('admin_dashboard/', views.admin_dashboard, name ='admin_dashboard'),
     
     path('user_update/', views.user_update, name ='user_update')

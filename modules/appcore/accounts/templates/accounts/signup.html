@@ -1,61 +1,38 @@
-{% extends 'accounts/base.html' %}
+{% extends 'shop/base.html' %}
 
-{% block head %}
-    <title>Create Account</title> 
-{% endblock %}
+{% block title %} Signup {% endblock %}
 
-{% block body %}
+{% block content %}
 <!--h1> Sign Up! </h1-->
-	{% load static %}
 
-  
+<section id="form"><!--form-->
+    <div class="container">
+        <div class="row">
 
-    <div class="container" >
-        <div class="card mt-4">
-            <h4 class="card-header">Full Sign Up!</h4>
-            <div class="card-body">
+            <div class="col-sm-4">
+                <div class="signup-form"><!--sign up form-->
+                    <h2>New User Full Signup!</h2>
+                    <form method="post" action="{% url 'accounts:signup' %}">
+                        {% csrf_token %}
+                        {{ form.as_table }}
+                        <br>
+                        <span>
+								<input type="checkbox" class="checkbox" name="agree" id="">
+                                <strong> I agree to all Terms & Conditions </strong>
+						</span>
+                         <br><br>
 
-           <div class="col-lg-10 d-flex align-items-center justify-content-center">
-            <div class="auth-form-transparent text-left p-3">
-
-              
-              <div class="brand-logo">
-                <img src="{% static 'accounts/images/webkrone_logo1.png' %}" alt="logo">
-              </div>
-
-              <h4>New here?</h4>
-              <h6 class="font-weight-light">Join us today! It takes only few steps</h6>
-
-
-                <form method="post" action="{% url 'signup' %}">
-                    {% csrf_token %}
-                    <table class="table table-bordered">
-                       {{ form.as_p }}
-                       <div class="form-check">
-                                <label class="form-check-label text-muted">
-                                  <input type="checkbox" class="form-check-input" name="agree" id="agree">
-                                  I agree to all Terms & Conditions <br>
-                                </label>
-                        </div>
-
-                        <tr>
-                            <td colspan="2">
-                                <button class="btn btn-primary">Register</button>
-                            </td>
-                        </tr>
-
-                    </table>
-                    <h5> Aready Member? </h5><a href="{% url 'login' %}">Login</a>  <br>
-                    <b> Quick Register </b><a href="{% url 'signuplite' %}">Click Here</a>
-                </form>
-
-
-              </div>
-             </div>   
-
+                        <button type="submit" class="btn btn-default">Signup</button>
+                    </form>
+                    <br>
+                    <b> Aready Member? </b><a href="{% url 'accounts:login' %}">Login</a> <br>
+                    <b> Lite Register </b><a href="{% url 'accounts:signuplite' %}">Click Here</a>
+                </div><!--/sign up form-->
             </div>
+
         </div>
     </div>
-    
+</section><!--/form-->
 
-{% endblock %} 
+{% endblock %}
+

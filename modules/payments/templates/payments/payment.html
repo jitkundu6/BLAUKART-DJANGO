@@ -31,7 +31,7 @@
               <h6 class="font-weight-light">PAY Rs.  {{pay_amount}} <br></h6>
 
                 <!--form action="/payments/success/" method="POST"-->
-                <form action="{% url 'payment-success' %}" method="POST">
+                <form action="{% url 'payments:payment-success' %}" method="POST">
                     {% csrf_token %}
                     <!--table class="table table-bordered"-->
                                    {{ form.as_p }}

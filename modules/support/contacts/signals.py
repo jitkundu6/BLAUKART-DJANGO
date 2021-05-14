@@ -21,13 +21,13 @@ def contacts_postsignal(sender, instance, **kwargs):
 		
 		try:
 			print("--Sending Greeting Email to Contact Person...")
-			subject = "Greeting from Blaustock!"
+			subject = "Greeting from Blaukart!"
 			message = f"""
 	Hello {instance.name},\nThanks for contacting us,\n
 	will Get back to you soon!
 
 	Regards,
-	Blaustock Team
+	Blaukart Team
 			"""
 
 			rcvr_email = instance.email # user email id
@@ -36,7 +36,7 @@ def contacts_postsignal(sender, instance, **kwargs):
 			print("-- Greeting Email sent...")
 			
 			print("--Sending Notification Email to Host...")
-			subject = "Blaustock - Contact Form Submitted"
+			subject = "Blaukart - Contact Form Submitted"
 			message = f"""
 				Received New Message.\n
 				Name: {instance.name}

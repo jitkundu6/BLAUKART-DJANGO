@@ -13,7 +13,9 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, Pass
 from django.contrib.auth import update_session_auth_hash
 
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect as _redirect
+
+
 from django.contrib.auth import login, logout, authenticate, views as auth_views
 from .forms import SignupForm
 from django.contrib.sites.shortcuts import get_current_site
@@ -33,6 +35,9 @@ from .utils import send_sms
 
 HOST_EMAIL = 'subhajit.webkrone@gmail.com'
 
+
+def redirect(args):
+	return _redirect('accounts:'+str(args))
 
 
 
@@ -83,19 +88,19 @@ def signup(request):
 				print(f'You are successfully registered!!')
 				#messages.info(request, f'Please verify your email address to get full access')
 				#print( f'Please verify your email address to get full access')
-				return redirect('/login')
+				return redirect('login')
 
 				#return HttpResponse('Please confirm your email address to complete the registration')
 
 			else:
 				messages.warning(request, f'Please check & agree to all Terms & Conditions')
 				print(f'Please check & agree to all Terms & Conditions')
-				return redirect('/signup')
+				return redirect('signup')
 
 		else:
 			messages.error(request, f'Invalid Entry, Please try again!')
 			print(f'Invalid Entry, Please try again!')
-			return redirect('/signup')
+			return redirect('signup')
 			#return HttpResponse('Invalid Entry, Please try again!')
 		 
 	form = UserRegisterForm()
@@ -134,18 +139,18 @@ def signuplite(request):
 
 					messages.success(request, f'You are successfully registered!!')
 					print(f'You are successfully registered!!')
-					return redirect('/login')
+					return redirect('login')
 					#return HttpResponse('You are successfully registered!!')
 
 				else:
 					messages.warning(request, f'Please check & agree to all Terms & Conditions')
 					print(f'Please check & agree to all Terms & Conditions')
-					return redirect('/signuplite')
+					return redirect('signuplite')
 
 			else:
 				messages.error(request, f'Invalid Entry, Please try again!')
 				print(f'Invalid Entry, Please try again!')
-				return redirect('/signuplite')
+				return redirect('signuplite')
 				#return HttpResponse('Invalid Entry, Please try again!')
 
 	except Exception as err:
@@ -172,12 +177,12 @@ def login_view(request):
 			form = login(request, user)
 			print(f' Welcome {user.email} !!')
 			messages.success(request, f' Welcome {user.email} !!')
-			#return redirect('/admin_dashboard')
-			return redirect('/user_dashboard')
+			#return redirect('admin_dashboard')
+			return redirect('user_dashboard')
 		else:
 			print(f'Access Denied: Invalid entry / Account does not exist')
 			messages.error(request, f'Invalid entry / Account does not exist')
-			return redirect('/login')
+			return redirect('login')
 
 	#form = AuthenticationForm()
 	form = LoginForm()
@@ -242,7 +247,7 @@ def password_change(request):
 
 			print( f' Password changed successfully !!')
 			messages.success(request, f' Password changed successfully !!')
-			return redirect('/login')
+			return redirect('login')
 		else:
 			print(f' Account does not exist - Invalid Entry')
 			messages.error(request, f'Account does not exist - Invalid Entry ')
@@ -265,23 +270,23 @@ def password_change(request):
 
 					print(f' Password changed successfully !!')
 					messages.success(request, f' Password changed successfully !!')
-					return redirect('/login')
+					return redirect('login')
 				else:
 					print(f'Invalid Entry - Try Again!')
 					messages.error(request, f'Invalid Entry - Try Again!')
-					return redirect('/password_change')
+					return redirect('password_change')
 					
 			except Exception as err:
 				print(f'Invalid Entry - {err}')
 				messages.error(request, f'Invalid Entry - {err}')
-				return redirect('/password_change')
+				return redirect('password_change')
 
 		form = PasswordChangeForm(user)
 		return render(request, 'accounts/password_reset.html', {'form': form, 'title': 'Password Change'})
 
 	print(f'You are not authorised - Please Log In!')
 	messages.warning(request, f'You are not authorised - Please Log In!')
-	return redirect('/login')
+	return redirect('login')
 
 
 
@@ -312,20 +317,20 @@ def admin_dashboard(request):
 				return render(request, 'accounts/admin_dashboard.html', param)
 			else:
 				print("You are not superuser")
-				return redirect('/user_dashboard')
+				return redirect('user_dashboard')
 		
 		print(f'Error: Account Email does not exit!')	
 		messages.error(request, f'Error: Account Email does not exit!')
-		return redirect('/login')		
+		return redirect('login')
 
 	except Exception as err:
 		print(f'Error: {err}, Please Try again!')	
 		messages.error(request, f'Error: {err}, Please Try again!')
-		return redirect('/login')		
+		return redirect('login')
 	
 	print(f'Account does not exit Plz Log In')		
 	messages.error(request, f'Account does not exit Plz Log In')
-	return redirect('/login')
+	return redirect('login')
 
 
 
@@ -348,20 +353,20 @@ def user_dashboard(request):
 			else:
 				print("User is not active")
 				messages.warning(request, f'User is not active')
-				return redirect('/login')
+				return redirect('login')
 				
 		print(f'Error: Account Email does not exit!')	
 		messages.error(request, f'Error: Account Email does not exit!')
-		return redirect('/login')	
+		return redirect('login')
 
 	except Exception as err:
 		print(f'Error: {err}, Please Try again!')	
 		messages.error(request, f'Error: {err}, Please Try again!')
-		return redirect('/login')		
+		return redirect('login')
 	
 	print(f'Account does not exit Plz Log In')		
 	messages.error(request, f'Account does not exit Plz Log In')
-	return redirect('/login')
+	return redirect('login')
 
 
 
@@ -382,20 +387,20 @@ def verify_email_view(request):
 				if (response == True):
 					print(f'Congrats!! You are successfully verified')
 					messages.success(request, f'Congrats!! You are successfully verified')
-					#return redirect('/user_dashboard')
-					return redirect('/admin_dashboard')
+					#return redirect('user_dashboard')
+					return redirect('admin_dashboard')
 
 				elif (response == False):
 					print(f'Error - Please Enter valid OTP')
 					messages.error(request, f'Error - Please Enter valid OTP')
-					return redirect('/verify_email')
+					return redirect('verify_email')
 
 				elif (response == None):
 					print(f'Error- This OTP is expired! Check Your Email for new OTP')
 					user.send_verification_email(from_email=HOST_EMAIL, validity=10)
 					messages.error(request, f'Error- This OTP is expired! Check Your Email for new OTP')
 					print(f'New OTP sent.')
-					return redirect('/verify_email')
+					return redirect('verify_email')
 
 			return render(request, 'accounts/verify_email.html')
 
@@ -405,7 +410,7 @@ def verify_email_view(request):
 
 	print(f'Please Login before Email verification!')
 	messages.warning(request, f'Please Login before Email verification!')
-	return redirect('/login')
+	return redirect('login')
 
 
 
@@ -428,7 +433,7 @@ def send_email_otp(request):
 
 			print(f'Check your email to get the OTP')
 			messages.info(request, f'Check your email to get the OTP')
-			return redirect('/verify_email')
+			return redirect('verify_email')
 
 
 	except Exception as err:
@@ -436,7 +441,7 @@ def send_email_otp(request):
 
 	print(f'You are not Registered- Please Log In!')
 	messages.warning(request, f'You are not Registered- Please Log In!')
-	return redirect('/login')
+	return redirect('login')
 
 
 
@@ -456,19 +461,19 @@ def verify_phone_view(request):
 				if (response == True):
 					print(f'Congrats!! Your phone number is successfully verified')
 					messages.success(request, f'Congrats!! Your phone number is successfully verified')
-					#return redirect('/user_dashboard')
-					return redirect('/admin_dashboard')
+					#return redirect('user_dashboard')
+					return redirect('admin_dashboard')
 
 				elif (response == False):
 					print(f'Error - Please Enter valid OTP')
 					messages.error(request, f'Error - Please Enter valid OTP')
-					return redirect('/verify_phone')
+					return redirect('verify_phone')
 
 				elif (response == None):
 					print(f'Error- This OTP is expired! Check Your phone for new OTP')
 					messages.error(request, f'Error- This OTP is expired! Check Your phone for new OTP')
 					print(f'Sending New OTP ...')
-					return redirect('/send_phone_otp')
+					return redirect('send_phone_otp')
 
 			return render(request, 'accounts/verify_phone.html')
 
@@ -478,7 +483,7 @@ def verify_phone_view(request):
 
 	print(f'Please Login before phone number verification!')
 	messages.warning(request, f'Please Login before phone number verification!')
-	return redirect('/login')
+	return redirect('login')
 
 
 
@@ -503,19 +508,19 @@ def send_phone_otp(request):
 
 				print(f'Check your phone to get the OTP')
 				messages.info(request, f'Check your phone to get the OTP')
-				return redirect('/verify_phone')
+				return redirect('verify_phone')
 
 			else:
 				print(f'Your phone number is not registered, Enter Your Ph. Number and try again!')
 				messages.warning(request, f'Your phone number is not registered, Enter Your Ph. Number and try again!')
-				return redirect('/user_dashboard')
+				return redirect('user_dashboard')
 
 	except Exception as err:
 		print(f'Error-{err}')
 
 	print(f'You are not Registered- Please Log In!')
 	messages.warning(request, f'You are not Registered- Please Log In!')
-	return redirect('/login')
+	return redirect('login')
 
 
 
@@ -559,12 +564,12 @@ def password_forget(request):
 
 				print(f'Check your Email to reset password!')
 				messages.info(request, f'Check your Email to reset password!')
-				return redirect('/password_reset_pending')
+				return redirect('password_reset_pending')
 
 		except Exception as err:
 			print(f'Invalid - {err}')
 			messages.error(request, f'Invalid - {err}')
-			return redirect('/password_forget')
+			return redirect('password_forget')
 
 	form = accounts_forms.PasswordForgetForm()
 	return render(request, 'accounts/password_forget.html', {'form': form, 'title': 'Password Reset'})
@@ -590,7 +595,7 @@ def password_reset_pending(request):
 
 	print(f'You are not authorised to access the page!')
 	messages.warning(request, f'You are not authorised to access the page!')
-	return redirect('/password_forget')
+	return redirect('password_forget')
 
 
 
@@ -617,22 +622,22 @@ def password_reset_by_link(request, token=''):
 
 					print(f'Verification Successfull!!')
 					messages.success(request, f'Verification Successfull!!')
-					return redirect('/password_reset')
+					return redirect('password_reset')
 
 				print(f'Invalid Link- Try Again!!')
 				messages.error(request, f'Invalid Link- Try Again!!')
-				return redirect('/password_forget')
+				return redirect('password_forget')
 
 			print(f'Link is expired- Try Again!!')
 			messages.error(request, f'Link is expired - Try Again!!')
-			return redirect('/password_forget')
+			return redirect('password_forget')
 
 	except Exception as err:
 		print(f"Exception- {err}")
 
 	print(f'You are not authorised to access the page!')
 	messages.warning(request, f'You are not authorised to access the page!')
-	return redirect('/password_forget')
+	return redirect('password_forget')
 
 
 
@@ -661,14 +666,14 @@ def password_reset_by_otp(request):
 
 						print(f'Verification Successfull!!')
 						messages.success(request, f'Verification Successfull!!')
-						return redirect('/password_reset')
+						return redirect('password_reset')
 
 					print(f'Invalid OTP- Try Again!!')
 					messages.error(request, f'Invalid OTP- Try Again!!')
 
 				print(f'OTP is expired- Try Again!!')
 				messages.error(request, f'OTP is expired - Try Again!!')
-				return redirect('/password_forget')
+				return redirect('password_forget')
 
 			########
 			return render(request, 'accounts/password_reset_by_otp.html')
@@ -678,7 +683,7 @@ def password_reset_by_otp(request):
 
 	print(f'You are not authorised to access the page!')
 	messages.warning(request, f'You are not authorised to access the page!')
-	return redirect('/password_forget')
+	return redirect('password_forget')
 
 
 
@@ -711,12 +716,12 @@ def password_reset(request):
 
 							print(f' Password reset successfully !!')
 							messages.success(request, f' Password reset successfully !!')
-							return redirect('/login')
+							return redirect('login')
 
 						else:
 							print(f'Invalid Entry - Try Again!')
 							messages.error(request, f'Invalid Entry - Try Again!')
-							return redirect('/password_reset')
+							return redirect('password_reset')
 
 					form = SetPasswordForm(user)
 					print("form created -GET")
@@ -727,14 +732,14 @@ def password_reset(request):
 
 			print(f'Link is expired- Try Again!!')
 			messages.error(request, f'Link is expired - Try Again!!')
-			return redirect('/password_forget')
+			return redirect('password_forget')
 
 	except Exception as err:
 		print(f"Exception- {err}")
 
 	print(f'You are not authorised to access the page!')
 	messages.warning(request, f'You are not authorised to access the page!')
-	return redirect('/password_forget')
+	return redirect('password_forget')
 
 
 # Update User details:
